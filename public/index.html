@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<!-- the above Mark of the Web lets IE run this page in the Internet security zone,
+     avoiding the permission prompt for running active content such as JavaScript -->
+<html>
+<head>
+    <meta charset="UTF-8"> 
+    <title>Image to Image App</title>
+    <base target="_blank">
+
+<link rel="stylesheet" href="/css/style.css">    
+<script src="js/script.js"></script> 
+
+</head>
+<body onload="document.forms.bing.query.focus();">
+
+<form name="bing" onsubmit="return newBingImageSearch(this)">
+
+<div id="logo"><!-- logo block including search market/language -->
+        <p>🖼️ Prompt instructions: <select id="promptInstructions">
+            <option value="clipart">Clipart</option>
+            <option value="austronaut">Austronaut</option>
+            <option value="oil paiting">Oil painting</option>
+        </select>
+    <p>
+        <p><select name="where">
+            <option value="es-AR">Argentina (Spanish)</option>
+            <option value="en-AU">Australia (English)</option>
+            <option value="de-AT">Austria (German)</option>
+            <option value="nl-BE">Belgium (Dutch)</option>
+            <option value="fr-BE">Belgium (French)</option>
+            <option value="pt-BR">Brazil (Portuguese)</option>
+            <option value="en-CA">Canada (English)</option>
+            <option value="fr-CA">Canada (French)</option>
+            <option value="es-CL">Chile (Spanish)</option>
+            <option value="da-DK">Denmark (Danish)</option>
+            <option value="fi-FI">Finland (Finnish)</option>
+            <option value="fr-FR">France (French)</option>
+            <option value="de-DE">Germany (German)</option>
+            <option value="zh-HK">Hong Kong (Traditional Chinese)</option>
+            <option value="en-IN">India (English)</option>
+            <option value="en-ID">Indonesia (English)</option>
+            <option value="it-IT">Italy (Italian)</option>
+            <option value="ja-JP">Japan (Japanese)</option>
+            <option value="ko-KR">Korea (Korean)</option>
+            <option value="en-MY">Malaysia (English)</option>
+            <option value="es-MX">Mexico (Spanish)</option>
+            <option value="nl-NL">Netherlands (Dutch)</option>
+            <option value="en-NZ">New Zealand (English)</option>
+            <option value="no-NO">Norway (Norwegian)</option>
+            <option value="zh-CN">People's Republic of China (Chinese)</option>
+            <option value="pl-PL">Poland (Polish)</option>
+            <option value="pt-PT">Portugal (Portuguese)</option>
+            <option value="en-PH">Philippines (English)</option>
+            <option value="ru-RU">Russia (Russian)</option>
+            <option value="ar-SA">Saudi Arabia (Arabic)</option>
+            <option value="en-ZA">South Africa (English)</option>
+            <option value="es-ES">Spain (Spanish)</option>
+            <option value="sv-SE">Sweden (Swedish)</option>
+            <option value="fr-CH">Switzerland (French)</option>
+            <option value="de-CH">Switzerland (German)</option>
+            <option value="zh-TW">Taiwan (Traditional Chinese)</option>
+            <option value="tr-TR">Turkey (Turkish)</option>
+            <option value="en-GB">United Kingdom (English)</option>
+            <option value="en-US" selected>United States (English)</option>
+            <option value="es-US">United States (Spanish)</option>
+        </select>
+    <p>
+
+</div>
+
+<div id="query"><!-- query controls including search field and options -->
+    <h1>Image to Image App with Bing Search 🔍, AI Vision 👁️ and DALL·E 2 🎨</h2>    
+
+        <input type="text" name="query" id="term" placeholder="Search for images" autocomplete=off>
+
+        <p>Aspect
+    <input type=radio name="aspect" id="any" value="all" checked>
+        <label for="any">Any</label>
+    <input type=radio name="aspect" id="square" value="square">
+        <label for="square">Square</label>
+    <input type=radio name="aspect" id="wide" value="wide">
+        <label for="wide">Wide</label>
+    <input type=radio name="aspect" id="tall" value="tall">
+        <label for="tall">Tall</label>
+
+        &nbsp;&nbsp;&nbsp;Color
+    <select name="color">
+        <option value="" selected>Any</option>
+        <option value="coloronly">Only Color</option>
+        <option value="monochrome">Black and White</option>
+        <option value="black">Black</option>
+        <option value="blue">Blue</option>
+        <option value="black">Brown</option>
+        <option value="gray">Gray</option>
+        <option value="green">Green</option>
+        <option value="orange">Orange</option>
+        <option value="pink">Pink</option>
+        <option value="purple">Purple</option>
+        <option value="red">Red</option>
+        <option value="teal">Teal</option>
+        <option value="white">White</option>
+        <option value="yellow">Yellow</option>                
+    </select>
+
+        &nbsp;&nbsp;&nbsp;From
+    <select name="when">
+        <option value="" selected>All time</option>
+        <option value="month">Past month</option>
+        <option value="week">Past week</option>
+        <option value="day">Last 24 hours</option>
+    </select>
+
+    &nbsp;&nbsp;&nbsp;<input type=checkbox id="safe" name="safe" value="on" checked><label for="safe">SafeSearch</label>
+
+    <!-- these hidden fields control paging -->
+    <input type=hidden name="count" value="25">
+    <input type=hidden name="offset" value="0">
+    <input type=hidden name="nextoffset" value="">    
+    <input type=hidden name="stack" value="[]">
+</form>
+
+</div>
+    <div id="error">
+    <h2>Error</h2>
+    <div id="_error">
+    </div>
+</div>
+
+<div id="bingresults">
+    <h2>Results</h2>
+    <div id="paging1">
+        <div id="_paging1"></div>
+    </div>
+
+    <div id="noresults">
+        <div id="_noresults">None yet.</div>
+    </div>
+
+    <div id="sidebar">
+        <div id="_sidebar"></div>
+    </div>
+
+    <div id="results">
+        <div id="_results"></div>
+    </div>
+
+
+    <div id="paging2">
+        <div id="_paging2"></div>
+    </div>
+        
+    <div id="json">
+        <h3><a href="#" onclick="return toggleDisplay('_json')">JSON</a></h3>
+        <div id="_json" style="display: none"></div>
+    </div>
+
+    <div id="http">
+        <h3><a href="#" onclick="return toggleDisplay('_http')">HTTP</a></h3>
+        <div id="_http" style="display: none"></div>
+    </div>
+</div>
+
+<!-- The modal -->
+<div id="genImageModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close">&times;</span>      
+      <div id="modal-content"></div>
+    </div>
+</div>
+
+</body>
+</html>
